@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Time Calculator</string>
+    <string name="button_home">HOME</string>
+    <string name="button_times">TIMES</string>
+    <string name="button_add">add</string>
+    <string name="button_timehint">HH:MM:SS|MM:SS or [1h|1m|1s ]*</string>
+    <string name="text_totaltime">00:00:00</string>
+    <string name="text_time">Total time</string>
+    <string name="title_activity_times">Times</string>
+    <string name="text_confirmation">Estas seguro que quieres guardar esto?</string>
+    <string name="text_si">SI</string>
+    <string name="text_no">NO</string>
+    <string name="text_setnombre">Cargue el nombre que quiera darle</string>
+
+</resources>
