@@ -1,8 +1,8 @@
 # TimeCalculatorApp
 Aplicacion para calcular tiempos, lo cree para saber cuanto tiempo voy a tardar en ver varias clases de la universidad
 
-Interfaz
-![image](https://github.com/FelipePipe2002/TimeCalculatorApp/assets/64708520/550aab2b-692d-4e0b-b8af-5965cb2162cc)
+Interfaz \
+<img src="https://github.com/FelipePipe2002/TimeCalculatorApp/assets/64708520/550aab2b-692d-4e0b-b8af-5965cb2162cc" width="300">
 
 Futuras Implementaciones
 -Poder pasar links de videos o listas de reproduccion de youtube
