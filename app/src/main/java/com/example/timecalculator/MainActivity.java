@@ -149,7 +149,15 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("times", MODE_PRIVATE);
         String totalTimesJson = sharedPreferences.getString("totaltimes", null);
         if(totalTimesJson != null){
-            letters.addAll(Arrays.asList(totalTimesJson.split(",")));
+            String[] totalTimes = totalTimesJson.split(",");
+            letters.addAll(Arrays.asList(totalTimes));
+
+            for (String string : totalTimes) {
+                String[] Hora = string.split(":");
+                Duration t = Duration.ofHours(Integer.parseInt(Hora[0])).plusMinutes(Integer.parseInt(Hora[1])).plusSeconds(Integer.parseInt(Hora[2]));
+                TotalTime = TotalTime + t.getSeconds();
+            }
+            texttime.setText( String.format("%d:%02d:%02d", TotalTime / 3600, (TotalTime % 3600) / 60, (TotalTime % 60)));
             adapter.notifyDataSetChanged();
         }
     }
