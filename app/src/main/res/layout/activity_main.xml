@@ -16,132 +16,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout5"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="300dp"
-            android:layout_marginEnd="30dp"
-            android:layout_marginBottom="250dp"
-            android:background="@drawable/layoutrounded"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="@string/text_setnombre"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/TextInputL2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_marginEnd="100dp"
-                android:layout_marginBottom="15dp"
-                android:background="@color/orange_200"
-                app:boxStrokeWidth="0dp"
-                app:boxStrokeWidthFocused="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/TextInputE2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/textinput"
-                    android:textColor="@color/black" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <Button
-                android:id="@+id/buttonname"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="15dp"
-                android:layout_marginBottom="17dp"
-                android:background="@drawable/textinputbutton"
-                android:text="Button"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/TextInputL2" />
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout4"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="300dp"
-            android:layout_marginEnd="30dp"
-            android:layout_marginBottom="250dp"
-            android:background="@drawable/layoutrounded"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/text_confirmation"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_begin="175dp" />
-
-            <Button
-                android:id="@+id/buttonsi"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/orange_500"
-                android:text="@string/text_si"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/guideline2"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView" />
-
-            <Button
-                android:id="@+id/buttonno"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/orange_500"
-                android:text="@string/text_no"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/guideline2"
-                app:layout_constraintTop_toBottomOf="@+id/textView" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
         <Button
             android:id="@+id/buttonadd"
             android:layout_width="75dp"
@@ -151,11 +25,23 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <Button
+            android:id="@+id/buttonQuestion"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/circlepopup"
+            android:backgroundTint="#FFFFFF"
+            android:text="?"
+            app:layout_constraintBottom_toTopOf="@+id/listtimes"
+            app:layout_constraintEnd_toStartOf="@+id/buttonadd"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/TextInputL"
-            android:layout_width="310dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
             android:layout_marginEnd="5dp"
             app:boxBackgroundColor="@android:color/transparent"
             app:layout_constraintEnd_toStartOf="@+id/buttonadd"
@@ -167,19 +53,38 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:hint="@string/button_timehint"
-                android:inputType="textVisiblePassword" />
+                android:imeOptions="actionDone"
+                android:inputType="datetime"
+                android:singleLine="true"
+                android:textColorHint="#757575" />
+
         </com.google.android.material.textfield.TextInputLayout>
 
         <ListView
             android:id="@+id/listtimes"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginEnd="70dp"
             android:layout_marginBottom="70dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/buttonadd" />
+            app:layout_constraintTop_toBottomOf="@+id/buttonadd">
+
+        </ListView>
+
+        <Button
+            android:id="@+id/buttondelete"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/circlebutton"
+            android:drawableStart="@drawable/baseline_access_time_24"
+            android:paddingStart="6dp"
+            app:icon="@drawable/baseline_access_time_24"
+            app:layout_constraintBottom_toTopOf="@+id/texttime"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:ignore="RtlSymmetry" />
 
         <TextView
             android:id="@+id/texttime"
@@ -219,18 +124,6 @@
             android:orientation="vertical"
             app:layout_constraintGuide_begin="130dp" />
 
-        <Button
-            android:id="@+id/buttonsave"
-            android:layout_width="0dp"
-            android:layout_height="55dp"
-            android:layout_marginEnd="15dp"
-            android:background="@drawable/circlebutton"
-            app:icon="@drawable/baseline_access_time_24"
-            app:layout_constraintBottom_toTopOf="@+id/texttime"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/listtimes"
-            tools:ignore="SpeakableTextPresentCheck" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -247,36 +140,66 @@
         app:layout_constraintVertical_bias="1.0"
         tools:context=".MainActivity">
 
+
         <Button
-            android:id="@+id/buttonhome"
+            android:id="@+id/button3"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:text="X1"
             android:background="?android:attr/selectableItemBackground"
-            android:text="@string/button_home"
             android:textColor="#4E342E"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/guideline3"
+            app:layout_constraintEnd_toStartOf="@+id/button4"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/buttontimes"
+            android:id="@+id/button4"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:text="x1.25"
             android:background="?android:attr/selectableItemBackground"
-            android:text="@string/button_times"
+            android:textColor="#4E342E"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/button5"
+            app:layout_constraintStart_toEndOf="@+id/button3"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/button5"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="X1.5"
+            android:background="?android:attr/selectableItemBackground"
+            android:textColor="#4E342E"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/button6"
+            app:layout_constraintStart_toEndOf="@+id/button4"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/button6"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="X1.75"
+            android:background="?android:attr/selectableItemBackground"
+            android:textColor="#4E342E"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/button7"
+            app:layout_constraintStart_toEndOf="@+id/button5"
+            app:layout_constraintTop_toTopOf="@+id/button7" />
+
+        <Button
+            android:id="@+id/button7"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="X2"
+            android:background="?android:attr/selectableItemBackground"
+            android:textColor="#4E342E"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/guideline3"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="TextContrastCheck,VisualLintButtonSize" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline3"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:orientation="vertical"
-            app:layout_constraintGuide_begin="205dp" />
+            app:layout_constraintStart_toEndOf="@+id/button6"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
