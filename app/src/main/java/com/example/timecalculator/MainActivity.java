@@ -22,6 +22,11 @@ import android.widget.TextView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStreamReader;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -36,6 +41,9 @@ public class MainActivity extends AppCompatActivity {
     private TextView texttime;
     private long TotalTime;
     private boolean correctpattern;
+    private TextInputEditText textinputE;
+    private TextInputLayout textinputL;
+    private Animation animation;
 
     @RequiresApi(api = Build.VERSION_CODES.S)
     @Override
@@ -43,8 +51,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        TextInputEditText textinputE = findViewById(R.id.TextInputE);
-        TextInputLayout textinputL = findViewById(R.id.TextInputL);
+        //------------------------------------------------------------------------------------------
+
+        //Declaracion de variables
+        textinputE = findViewById(R.id.TextInputE);
+        textinputL = findViewById(R.id.TextInputL);
         Button buttonAdd = findViewById(R.id.buttonadd);
         Button buttonDelete = findViewById(R.id.buttondelete);
         Button buttonv1 = findViewById(R.id.button3);
@@ -52,28 +63,31 @@ public class MainActivity extends AppCompatActivity {
         Button buttonv3 = findViewById(R.id.button5);
         Button buttonv4 = findViewById(R.id.button6);
         Button buttonv5 = findViewById(R.id.button7);
-
-        Animation animation = AnimationUtils.loadAnimation(this, R.anim.shake);
-
         ListView listView = findViewById(R.id.listtimes);
         texttime = findViewById(R.id.texttime);
+        animation = AnimationUtils.loadAnimation(this, R.anim.shake);
+
         letters = new ArrayList<>();
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, letters);
         TotalTime = 0;
         correctpattern = false;
-        listView.setAdapter(adapter);
+        
+        //------------------------------------------------------------------------------------------
 
+        //List of Times
+        listView.setAdapter(adapter);
         listView.setOnItemClickListener((parent, view, position, id) -> {
-            RemoveHours(letters,position);
-            adapter.notifyDataSetChanged();
+            RemoveHours(letters, position);
         });
 
+        //------------------------------------------------------------------------------------------
+
+        //Text Input
         textinputE.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
             }
-
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if(Objects.requireNonNull(textinputE.getText()).length()==0){
@@ -95,25 +109,26 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             }
-
             @Override
             public void afterTextChanged(Editable editable) {
 
             }
         });
+
         textinputE.setOnEditorActionListener((textView, i, keyEvent) -> {
             if (i == EditorInfo.IME_ACTION_DONE) {
-                if (correctpattern) {
-                    AddHours(String.valueOf(textinputE.getText()),letters);
-                    adapter.notifyDataSetChanged();
-                    textinputE.setText("");
-                } else{
-                    textinputE.startAnimation(animation);
-                    textinputL.startAnimation(animation);
-                }
+                AddHours(String.valueOf(textinputE.getText()), letters);
                 return true;
             }
             return false;
+        });
+
+        //------------------------------------------------------------------------------------------
+
+
+        //Buttons
+        buttonAdd.setOnClickListener(view -> {
+            AddHours(String.valueOf(textinputE.getText()), letters);
         });
 
         buttonv1.setOnClickListener(view -> VelocityChanger(1F));
@@ -123,43 +138,50 @@ public class MainActivity extends AppCompatActivity {
         buttonv5.setOnClickListener(view -> VelocityChanger(2F));
 
         buttonDelete.setOnClickListener(view -> {
-            adapter.clear();
-            adapter.notifyDataSetChanged();
-            TotalTime=0;
-            texttime.setText("0:00:00");
-            SharedPreferences sharedPreferences = getSharedPreferences("times", MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.clear();
-            editor.apply();
+            resetTimes();
         });
 
-        buttonAdd.setOnClickListener(view -> {
-            if (correctpattern) {
-                AddHours(String.valueOf(textinputE.getText()),letters);
-                adapter.notifyDataSetChanged();
-                textinputE.setText("");
-            } else{
-                textinputE.startAnimation(animation);
-                textinputL.startAnimation(animation);
-            }
+        //------------------------------------------------------------------------------------------
 
-        });
+        //load times from file
+        readFromFile();
+    }
 
-        //load times
-        SharedPreferences sharedPreferences = getSharedPreferences("times", MODE_PRIVATE);
-        String totalTimesJson = sharedPreferences.getString("totaltimes", null);
-        if(totalTimesJson != null){
-            String[] totalTimes = totalTimesJson.split(",");
-            letters.addAll(Arrays.asList(totalTimes));
-
-            for (String string : totalTimes) {
-                String[] Hora = string.split(":");
-                Duration t = Duration.ofHours(Integer.parseInt(Hora[0])).plusMinutes(Integer.parseInt(Hora[1])).plusSeconds(Integer.parseInt(Hora[2]));
-                TotalTime = TotalTime + t.getSeconds();
+    @RequiresApi(api = Build.VERSION_CODES.S)
+    public void readFromFile(){
+        try {
+            FileInputStream fileInputStream = openFileInput("times.txt");
+            InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream);
+            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                if (match(line)){
+                    String[] Hora = line.split(":");
+                    if(Hora.length == 3) {
+                        Duration t = Duration.ofHours(Integer.parseInt(Hora[0])).plusMinutes(Integer.parseInt(Hora[1])).plusSeconds(Integer.parseInt(Hora[2]));
+                        TotalTime = TotalTime + t.getSeconds();
+                        letters.add(line);
+                    } else {
+                        System.out.println("Error en el formato de tiempo guardado");
+                        System.out.println(line);
+                    }
+                }
             }
             texttime.setText( String.format("%d:%02d:%02d", TotalTime / 3600, (TotalTime % 3600) / 60, (TotalTime % 60)));
             adapter.notifyDataSetChanged();
+            fileInputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+    }
+
+    public void resetTimes(){
+        adapter.clear();
+        adapter.notifyDataSetChanged();
+        TotalTime=0;
+        texttime.setText("0:00:00");
+        File file = new File(getFilesDir(), "times.txt");
+        file.delete();
     }
 
     public boolean match(String input){
@@ -172,8 +194,15 @@ public class MainActivity extends AppCompatActivity {
         return matcher1.matches() || matcher2.matches();
     }
 
+
     @RequiresApi(api = Build.VERSION_CODES.S)
     public void AddHours(String input, ArrayList<String> letters){
+        if(!correctpattern){
+            textinputE.startAnimation(animation);
+            textinputL.startAnimation(animation);
+            return;
+        }
+
         Pattern pattern1 = Pattern.compile("^(((\\d\\d|\\d):(\\d|0\\d|[0-5]\\d):(\\d|0\\d|[0-5]\\d))|((\\d|0\\d|[0-5]\\d):(\\d|0\\d|[0-5]\\d)))"); // (1:1:20 or 1:0)
         Matcher matcher1 = pattern1.matcher(input);
 
@@ -227,17 +256,17 @@ public class MainActivity extends AppCompatActivity {
             TotalTime = TotalTime + t.getSeconds();
             texttime.setText( String.format("%d:%02d:%02d", TotalTime / 3600, (TotalTime % 3600) / 60, (TotalTime % 60)));
 
-            SharedPreferences sharedPreferences = getSharedPreferences("times", MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            String totalTimesJson = sharedPreferences.getString("totaltimes", null);
-            System.out.println(totalTimesJson);
-            if(totalTimesJson != null){
-                editor.putString("totaltimes", totalTimesJson + "," + hora+":"+minuto+":"+segundos);
-            } else {
-                editor.putString("totaltimes", hora+":"+minuto+":"+segundos);
+            File file = new File(getFilesDir(), "times.txt");
+            try {
+                FileOutputStream fileOutputStream = new FileOutputStream(file, true);
+                fileOutputStream.write((hora+":"+minuto+":"+segundos+"\n").getBytes());
+                fileOutputStream.close();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            editor.apply();
         }
+        adapter.notifyDataSetChanged();
+        textinputE.setText("");
     }
 
     @SuppressLint("DefaultLocale")
@@ -253,20 +282,17 @@ public class MainActivity extends AppCompatActivity {
         TotalTime = TotalTime - t.getSeconds(); //lo resto del total
 
         texttime.setText( String.format("%d:%02d:%02d", TotalTime / 3600, (TotalTime % 3600) / 60, (TotalTime % 60)));
-        SharedPreferences sharedPreferences = getSharedPreferences("times", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        String totalTimesJson = sharedPreferences.getString("totaltimes", null);
-        if(totalTimesJson != null){
-            String[] totalTimes = totalTimesJson.split(",");
-            StringBuilder newTotalTimes = new StringBuilder();
-            for (String totalTime : totalTimes) {
-                if (!totalTime.equals(r)) {
-                    newTotalTimes.append(totalTime).append(",");
-                }
+        File file = new File(getFilesDir(), "times.txt");
+        try {
+            FileOutputStream fileOutputStream = new FileOutputStream(file, false);
+            for (String letter : letters) {
+                fileOutputStream.write((letter + "\n").getBytes());
             }
-            editor.putString("totaltimes", newTotalTimes.toString());
-            editor.apply();
+            fileOutputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        adapter.notifyDataSetChanged();
     }
 
     public void VelocityChanger(float i){
